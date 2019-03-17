@@ -1,0 +1,127 @@
+%% ***************************************************************************************************************************************************************
+%%  Adapted from: Dissertation template and document class for Princeton University 
+%%                    (Author: Jeffrey Scott Dwoskin <jdwoskin@princeton.edu>)     
+%% ***************************************************************************************************************************************************************
+
+
+%% ======================Choose "Printed" or "ProQuest" or "Online" or "Draft" (uncomment commands under the option you choose)====================
+%% Printed: single space, no hyperlinks (Delete all output files before changing this mode -- it will turn hyperref package on and off)
+% \documentclass[12pt, lot, lof, glossary, singlespace]{puthesis}
+% \newcommand{\printmode}{}
+
+%% ProQuest: double space, outlined links
+\documentclass[12pt, lot, lof, glossary]{puthesis}
+\newcommand{\proquestmode}{}
+
+%% Online: double space,  hyperlinks
+% \documentclass[12pt, lot, lof, glossary]{puthesis}
+
+%% Draft: no "List of Tables", "List of Figures", .etc (also see the "ifodd" command below to disable more frontmatter)
+% \documentclass[12pt]{puthesis}
+
+%% ========================================================================info===================================================================
+\title{Thesis/Dissertation Title}
+\author{Author Name}
+% \submitted{}  % degree conferral date
+% \copyrightyear{}  % year in which the copyright is secured by publication of the dissertation.
+% \adviser{}  
+% \department{}
+
+%% ========================================================= Printed, ProQuest, Online formatting=================================================
+\ifdefined\printmode     % [Printed] (single space, no hyperlink)
+  \usepackage{url}     % url package understands urls (with proper line-breaks) without hyperlinking them
+\else
+  \ifdefined\proquestmode % [ProQuest] (double space, outlined links instead of colored links)
+    \usepackage{hyperref}
+    \hypersetup{bookmarksnumbered}
+    
+    %% copy the already-set title and author to use in the pdf properties
+    \makeatletter
+    \hypersetup{pdftitle=\@title,pdfauthor=\@author}
+    \makeatother
+  
+  \else % [Online] (makes links by coloring the text)
+    \usepackage{hyperref}
+    \hypersetup{colorlinks,bookmarksnumbered}
+    
+    \makeatletter
+    \hypersetup{pdftitle=\@title,pdfauthor=\@author}
+    \makeatother
+    
+    %% make the page number rather than the text be the link for ToC entries
+    % \hypersetup{linktocpage}
+  
+  \fi
+\fi
+
+%% ==============================================================================rename============================================================
+\renewcommand*{\contentsname}{Table of Contents}
+\renewcommand{\bibname}{References}
+
+%% =============================================================================glossary===========================================================
+\usepackage[acronym]{glossaries}
+\makeglossaries
+\input{glossaries}
+  
+%% ===========================================================================Front-matter=========================================================
+\ifodd 0 % no titlepage, no copyrightpage, no abstract, no acknowledgement, no dedication
+  \renewcommand{\makecoverpage}{}
+  \renewcommand*{\makecopyrightpage}{}
+  \renewcommand*{\makeabstract}{}
+  
+\else % all have
+  \abstract{ \input{abstract} }
+  \acknowledgements{ \input{acknowledgements} }
+  \dedication{To my parents.}
+\fi 
+
+%% =================================-======================================Hide some chapters======================================================
+%% If you want to produce a pdf that includes only certain chapters, specify them with includeonly, in addition to including all chapters below.
+% \includeonly{ch-intro/chapter-intro}
+
+%% You can also specify multiple chapters.
+% \includeonly{ch-intro/chapter-intro,ch-usage/chapter-usage}
+% \includeonly{chap1,chap2,chap3}
+
+%% ===================================================================================
+%%                                  Notes
+%% ===================================================================================
+%% Footnotes should be placed after punctuation.\footnote{place here.}
+%% Generally, place citations before the period~\cite{anotherauthor}.
+%% The proper usage for i.e., and e.g., include commas ``(e.g., option A, option B)''
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%-------------------------------------------------------------------------------------BEGIN----------------------------------------------------------------------
+\begin{document}
+
+\makefrontmatter
+%% If you've disabled frontmatter, you can insert the toc manually
+% \tableofcontents\clearpage
+
+%% \include lets us split up the document (and each include starts a new page)
+\include{ch-intro/chapter-intro}
+\include{ch-2/chapter-2}
+\include{ch-discussion/chapter-discussion}
+
+%% ---------------------------------------------------------------------------------References--------------------------------------------------------------------
+\singlespacing     % Make the bibliography single spaced
+\bibliographystyle{unsrt} 
+
+%% add the Bibliography to the Table of Contents
+\cleardoublepage
+\ifdefined\phantomsection
+   \phantomsection  % makes hyperref recognize this section properly for pdf link\else
+ \fi
+\addcontentsline{toc}{chapter}{References}
+
+\bibliography{references} % include your .bib file
+
+%% ---------------------------------------------------------------------------------Appendix-----------------------------------------------------------------------
+\appendix 
+%% all chapters following will be labeled as appendices
+\include{ch-appendices/implementation}
+\include{ch-appendices/usage}
+
+\end{document}
+
