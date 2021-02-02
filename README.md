@@ -10,7 +10,7 @@ Apendices include instructions and usage of the template. They were from the ori
 
 # How to Use
 Fill out and download *Thesis/Dissertation Cover and Approval Pages* from UVa Engineering website [here](https://seas.virginia.edu/forms/thesis-cover-approval.php), replace the "CoverNApproval.pdf" file with your own. Make sure in your "CoverNApproval.pdf" file, page 1 is the cover, page 2 is approval sheet. Otherwise modify ["puthesis.cls"](./puthesis.cls) line 165 and 183 accordingly.   
-## Complie
+## Compile
     $ pdflatex thesis
     $ bibtex thesis
     $ makeglossaries thesis
